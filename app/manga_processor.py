@@ -16,6 +16,7 @@ from pathlib import Path
 
 from config import Config
 from database import Database
+from file_watcher import FileWatcher
 from utils import setup_logging, ensure_directory
 
 class MangaManager:
@@ -36,6 +37,14 @@ class MangaManager:
         
         self.logger.info("Manga Manager started")
         self._initialize_directories()
+        
+        # Initialize file watcher
+        downloads_path = self.config.paths.get('downloads', '/downloads')
+        self.file_watcher = FileWatcher(
+            watch_path=downloads_path,
+            callback=self.process_file,
+            debounce_seconds=2
+        )
     
     def _signal_handler(self, signum, frame):
         """Handle shutdown signals gracefully."""
@@ -52,16 +61,47 @@ class MangaManager:
         
         self.logger.info("Directory structure initialized")
     
+    def process_file(self, file_path):
+        """Process a single CBZ file.
+        
+        Args:
+            file_path: Path to CBZ file to process
+        """
+        self.logger.info(f"Processing file: {file_path.name}")
+        
+        try:
+            # TODO: Implement actual processing pipeline
+            # For now, just log that we received the file
+            self.logger.info(f"File queued for processing: {file_path}")
+            
+            # Check if already processed (duplicate detection)
+            file_hash = self.db.calculate_file_hash(file_path)
+            
+            if self.db.is_duplicate(file_hash):
+                self.logger.warning(f"Duplicate file detected: {file_path.name}")
+                return
+            
+            self.logger.info(f"New file confirmed: {file_path.name} (hash: {file_hash[:16]}...)")
+            
+        except Exception as e:
+            self.logger.error(f"Error processing {file_path.name}: {e}", exc_info=True)
+    
     def run(self):
         """Main application loop."""
         check_interval = self.config.check_interval
         
         self.logger.info(f"Starting monitoring (check interval: {check_interval}s)")
         
+        # Start file watcher
+        self.file_watcher.start()
+        
+        # Process any existing files
+        self.file_watcher.scan_existing_files()
+        
         while self.running:
             try:
-                # TODO: File watcher will trigger processing here
-                self.logger.debug("Checking for new files...")
+                # Check for pending files that are ready
+                self.file_watcher.check_pending()
                 
                 # Sleep until next check
                 time.sleep(check_interval)
@@ -75,6 +115,7 @@ class MangaManager:
     def _shutdown(self):
         """Clean shutdown process."""
         self.logger.info("Shutting down gracefully...")
+        self.file_watcher.stop()
         self.db.close()
         self.logger.info("Manga Manager stopped")
 
