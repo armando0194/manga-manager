@@ -1,0 +1,33 @@
+# Example configuration file
+# Copy this to settings.yml and adjust paths for your environment
+
+general:
+  log_level: INFO
+  check_interval: 30  # seconds between directory checks
+  
+paths:
+  downloads: /downloads
+  processing: /processing
+  manga: /manga
+  kindle: /kindle
+  data: /data
+  
+processing:
+  kindle_conversion_enabled: false
+  cover_download_enabled: true
+  cover_source: "manual"  # auto, wikia, manual
+  
+naming:
+  volume_digits: 3
+  chapter_digits: 5
+  
+metadata:
+  preserve_existing: true
+  required_fields:
+    - Series
+    - Number
+    - Volume
+  
+notifications:
+  enabled: false
+  webhook_url: ""

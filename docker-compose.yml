@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  manga-manager:
+    build: .
+    container_name: manga-manager
+    restart: unless-stopped
+    volumes:
+      # Application code (for development)
+      - ./app:/app
+      - ./config:/config
+      - ./logs:/logs
+      
+      # Data directory (database and cover cache)
+      - ./data:/data
+      
+      # Manga directories (update these paths to match your NAS)
+      - /mnt/rat-nas/media/manga-downloads:/downloads
+      - /mnt/rat-nas/media/manga-processing:/processing  # Your backup/processing folder
+      - /mnt/rat-nas/media/manga:/manga
+      - /mnt/rat-nas/media/kindle-manga:/kindle
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+    # Uncomment to expose web UI port when implemented
+    # ports:
+    #   - "8080:8080"

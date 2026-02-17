@@ -1,0 +1,14 @@
+# File system monitoring
+watchdog==3.0.0
+
+# XML parsing for ComicInfo.xml
+lxml==5.1.0
+
+# Image processing
+Pillow==10.2.0
+
+# HTTP requests for cover downloads
+requests==2.31.0
+
+# YAML configuration
+PyYAML==6.0.1
