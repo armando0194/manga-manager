@@ -1,0 +1,19 @@
+services:
+  manga-manager:
+    build: .
+    container_name: manga-manager-test
+    volumes:
+      - ./app:/app
+      - ./config:/config
+      - ./logs:/logs
+      - ./data:/data
+      - ./test-data/downloads:/downloads
+      - ./test-data/processing:/processing
+      - ./test-data/manga:/manga
+      - ./test-data/kindle:/kindle
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=DEBUG
+    stdin_open: true
+    tty: true
+    command: /bin/bash

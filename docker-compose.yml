@@ -22,6 +22,5 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - LOG_LEVEL=INFO
-    # Uncomment to expose web UI port when implemented
-    # ports:
-    #   - "8080:8080"
+    ports:
+      - "8080:8080"

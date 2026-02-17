@@ -12,3 +12,7 @@ requests==2.31.0
 
 # YAML configuration
 PyYAML==6.0.1
+
+# Web framework for UI
+Flask==3.0.0
+Flask-CORS==4.0.0
