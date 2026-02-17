@@ -53,9 +53,9 @@ Examples:
 
 **NAS Mapping:**
 ```
-/mnt/rat-nas/media/
-├── manga-downloads/manga/     → /downloads
-└── manga/
+/mnt/rat-nas/
+├── downloads/manga/           → /downloads
+└── media/manga/
     ├── library/               → /manga
     ├── processing/            → /processing
     └── kindle/                → /kindle
