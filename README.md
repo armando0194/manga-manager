@@ -47,9 +47,18 @@ Examples:
 /downloads   → New manga downloads (watched)
 /processing  → Temporary processing workspace
 /manga       → Final organized library
-/backup      → Backup copies (optional)
 /kindle      → Kindle format output (optional)
 /data        → Database and cover cache
+```
+
+**NAS Mapping:**
+```
+/mnt/rat-nas/media/
+├── manga-downloads/manga/     → /downloads
+└── manga/
+    ├── library/               → /manga
+    ├── processing/            → /processing
+    └── kindle/                → /kindle
 ```
 
 ## License

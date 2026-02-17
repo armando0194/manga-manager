@@ -14,11 +14,11 @@ services:
       # Data directory (database and cover cache)
       - ./data:/data
       
-      # Manga directories (update these paths to match your NAS)
-      - /mnt/rat-nas/media/manga-downloads:/downloads
-      - /mnt/rat-nas/media/manga-processing:/processing  # Your backup/processing folder
-      - /mnt/rat-nas/media/manga:/manga
-      - /mnt/rat-nas/media/kindle-manga:/kindle
+      # Manga directories (updated structure)
+      - /mnt/rat-nas/media/manga-downloads/manga:/downloads
+      - /mnt/rat-nas/media/manga/processing:/processing
+      - /mnt/rat-nas/media/manga/library:/manga
+      - /mnt/rat-nas/media/manga/kindle:/kindle
     environment:
       - PYTHONUNBUFFERED=1
       - LOG_LEVEL=INFO
